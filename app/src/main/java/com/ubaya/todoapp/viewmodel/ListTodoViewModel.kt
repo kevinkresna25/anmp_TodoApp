@@ -3,6 +3,7 @@ package com.ubaya.todoapp.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import buildDb
 import com.ubaya.todoapp.model.Todo
 import com.ubaya.todoapp.model.TodoDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +25,7 @@ class ListTodoViewModel(application: Application):AndroidViewModel(application),
         loadingLD.value = true
         errorLD.value = false
         launch { // di dalam Coroutine bukan menggunakan .value tapi .postValue
-            val db = TodoDatabase.buildDatabase(getApplication())
+            val db = buildDb(getApplication())
             todoLD.postValue(db.todoDao().selectAll())
             loadingLD.postValue(false)
         }
@@ -32,7 +33,7 @@ class ListTodoViewModel(application: Application):AndroidViewModel(application),
 
     fun clearTask(todo: Todo) { // todo mana yang mau didelete
         launch {
-            val db = TodoDatabase.buildDatabase(getApplication())
+            val db = buildDb(getApplication())
             db.todoDao().deleteTodo(todo)
             todoLD.postValue(db.todoDao().selectAll())
         }

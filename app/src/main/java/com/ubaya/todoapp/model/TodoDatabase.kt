@@ -1,5 +1,6 @@
 package com.ubaya.todoapp.model
 
+import DB_NAME
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -17,7 +18,7 @@ abstract class TodoDatabase: RoomDatabase() {
 
         fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-                TodoDatabase::class.java, "tododb").build() // nama database = "tododb"
+                TodoDatabase::class.java, DB_NAME).build() // nama database = "tododb"
     }
 
     operator fun invoke(context: Context) {
